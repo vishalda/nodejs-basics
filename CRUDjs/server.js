@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 
-require('dotenv').config({path: 'env'});
+require('dotenv').config({path: '.env'});
 
 mongoose.connect(process.env.DATABASE,
 	{
@@ -11,10 +11,11 @@ mongoose.connect(process.env.DATABASE,
 );
 
 mongoose.Promise = global.Promise;
-mongoose.connection.on('error':(err) =>{
+mongoose.connection.on('error',(err) =>{
 	console.error(`Database connection error = ${err}`);
 });
 
+require('./Models/Notes.js');
 const app = require('./app');
 
 const server = app.listen(3000, ()=>{
