@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise;
 
 const notesSchema = new mongoose.Schema({
 	title:{
@@ -9,6 +10,4 @@ const notesSchema = new mongoose.Schema({
 	}
 });
 
-let Notes = mongoose.model('notes',notesSchema);
-
-module.exports = Notes;
+module.exports = mongoose.model('notes',notesSchema);
