@@ -20,6 +20,10 @@ const userModel = new mongoose.Schema({
 		type:String,
 		default:null
 	},
+    bio:{
+        type:String,
+        default:null
+    },
 	phone:{
 		type:String,
 		default:null

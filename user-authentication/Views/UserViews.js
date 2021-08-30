@@ -3,6 +3,7 @@ const User = mongoose.model('user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Volunteer = mongoose.model('volunteer');
+const Patient = mongoose.model('patient');
 
 exports.baseRoute = async(req,res)=>{
 	res.send("server up and running");
@@ -10,9 +11,9 @@ exports.baseRoute = async(req,res)=>{
 
 exports.RegisterUser = async(req,res)=>{
 	try{
-		const {name,email,username,password,phone,address} = req.body;
+		const {name,bio,email,username,password,phone,address} = req.body;
 
-		if(!(email && password && username && name && address && phone)){
+		if(!(email && bio && password && username && name && address && phone)){
 			res.status(400).send("All input are required");
 		}
 
@@ -32,6 +33,7 @@ exports.RegisterUser = async(req,res)=>{
 			username: username,
 			phone: phone,
 			address: address,
+            bio: bio,
 		});
 		
 		const token = jwt.sign(
@@ -144,3 +146,46 @@ exports.AssignUser = async(req,res)=>{
 		return res.status(400).send("Something went wrong");
 	}
 }
+
+exports.UnAssignUser = async(req,res)=>{
+	try{
+		const {uid} = req.body;
+		if(!(uid)){
+			res.status(400).send("Provide every field");
+		}
+		const volunteer = await Volunteer.findOne({_uid:uid});
+		if(volunteer){
+			volunteer._pid = null;
+			volunteer.isAccepted = false;
+			volunteer.isAvailable = true;
+			volunteer.save();
+			return res.status(200).json(volunteer);
+		}
+		return res.status(400).send("Try again");
+	}catch{	
+		res.status(400).send("Something went wrong");
+	}
+}
+
+exports.CreatePatient = async(req,res)=>{
+	try{
+		const {description,uid,did} = req.body;
+		if(!(description,uid,did)){
+			res.status(400).send("Provide every field");
+		}
+		const patient = await Patient.create({
+			description:description,
+			_uid:uid,
+			_did:did,
+			isAccepted:false,
+		});
+		if(parient){
+			return res.status(200).json(patient);
+		}
+		return res.status(400).send("Try again");
+	}catch{
+		res.status(400).send("Something went wrong");
+	}
+}
+
+			

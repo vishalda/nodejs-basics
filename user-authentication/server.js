@@ -14,6 +14,8 @@ mongoose.connection.on('error',(err)=>{
 
 require('./Models/UserModel.js');
 require('./Models/VolunteerModel.js');
+require('./Models/PatientModel.js');
+
 const app= require('./index.js');
 const server =app.listen(3000,()=>{
 	console.log(`Express server is up and running on ${server.address().port}`);

@@ -11,5 +11,7 @@ router.post('/user/login',userViews.LoginUser);
 router.post('/user/logout',userViews.LogoutUser);
 router.post('/create-volunteer',userViews.CreateVolunteer);
 router.post('/assign-user',userViews.AssignUser);
+router.post('/unassign-user',userViews.UnAssignUser);
+router.post('/new-patient',userViews.CreatePatient);
 
 module.exports = router;

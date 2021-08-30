@@ -1,26 +1,22 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise;
 
-const volunteerModel = new mongoose.Schema({
-	experience:{
+const patientModel = new mongoose.Schema({
+	description:{
 		type:String
 	},
 	isAccepted:{
 		type:Boolean,
 		default:false
 	},
-	isAvailable:{
-		type:Boolean,
-		default:true
+	_did:{
+		type: mongoose.Schema.Types.ObjectId, 
+		ref: 'volunteer'
 	},
 	_uid:{
-		type: mongoose.Schema.Types.ObjectId, 
-		ref: 'user'
-	},
-	_pid:{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'patient'
+		ref: 'user'
 	}
 });
 
-module.exports = mongoose.model('volunteer',volunteerModel);
+module.exports = mongoose.model('patient',patientModel);
